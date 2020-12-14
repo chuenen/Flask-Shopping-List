@@ -17,6 +17,14 @@ class Config:
         return self._settings['host']
 
     @property
+    def seconds(self):
+        return self._settings['seconds']
+
+    @property
+    def slack_webhook(self):
+        return self._settings['slack_webhook']
+
+    @property
     def sqlalchemy_database_url(self):
         return 'mysql+pymysql://%(username)s:%(password)s' \
                '@%(host)s/%(database)s?charset=utf8mb4' \

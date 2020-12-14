@@ -1,6 +1,7 @@
 MAKEFLAGS=--warn-undefined-variables
 
 # Internal Variables
+seconds ?= 10
 project_path = shopping-list
 image = $(project_path)
 docker_compose_opts = -f docker-compose.yml

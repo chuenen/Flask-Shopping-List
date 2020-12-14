@@ -48,5 +48,10 @@ def list_top3():
     top3 = facade.list_top3()
     return jsonify(top3)
 
+@api.route('/shops', methods=['GET'])
+def list_shops():
+    shops = facade.list_shops()
+    return jsonify(shops)
+
 
 # vi:et:ts=4:sw=4:cc=80

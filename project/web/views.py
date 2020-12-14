@@ -26,12 +26,13 @@ def identity_and_inventory_checked(func):
     def wrapper(*args, **kwargs):
         form=request.form
 
+        qty = int(form['qty'])
         vip = bool(form.get('vip'))
         product_id = form['product']
         product = http_get(f'{config.host}/api/products/{product_id}').json()
 
         vip_mismatch = vip != product['vip'] if product['vip'] else False
-        understock = product['stock_pcs'] == 0
+        understock = (product['stock_pcs'] - qty) < 0
 
         if vip_mismatch or understock:
             return redirect(url_for(

@@ -1,0 +1,201 @@
+{% extends "base.html" %}
+
+{% block styles %}
+{% endblock%}
+
+{% block content %}
+<div class="center aligned ten wide computer sixteen wide tablet column">
+
+  <form id="form" class="ui form padded segment" method="POST" action="{{ url_for('web.add_order') }}" enctype="multipart/form-data">
+    <div class="five fields">
+      <div class="field required">
+        <div id="product" class="ui fluid selection dropdown">
+          <input type="hidden" name="product">
+          <i class="dropdown icon"></i>
+          <div class="default text">Select Product</div>
+        </div>
+      </div>
+      <div class="field required">
+        {{ form.qty(placeholder="數量") }}
+      </div>
+      <div class="field required">
+        {{ form.customer_id(placeholder="Customer ID") }}
+      </div>
+      <div class="inline field">
+        {{ form.vip.label }}</label>
+        {{ form.vip }}
+      </div>
+      <div class="field">
+        <button class="circular ui icon button" type="submit">
+         <i class="icon plus"></i>
+        </button>
+      </div>
+    </div>
+  </form>
+
+  <table class="ui center aligned celled fixed table">
+    <thead>
+      <tr>
+        <th>Product ID</th>
+        <th>Stock PCS</th>
+        <th>Price</th>
+        <th>Shop ID</th>
+        <th>VIP</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for product in products %}
+      <tr>
+        <td>{{ product.id }}</td>
+        <td>{{ product.stock_pcs }}</td>
+        <td>{{ product.price }}</td>
+        <td>{{ product.shop_id }}</td>
+        <td>
+          {% if product.vip %}
+          <i class="large green checkmark icon"></i>
+          {% endif %}
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <table class="ui center aligned celled fixed table">
+    <thead>
+      <tr>
+        <th>Order ID</th>
+        <th>Product ID</th>
+        <th>Qty</th>
+        <th>Price</th>
+        <th>Shop ID</th>
+        <th>Customer ID</th>
+        <th>Remove</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for order in orders %}
+      <tr>
+        <td>{{ order.id }}</td>
+        <td>{{ order.product.id }}</td>
+        <td>{{ order.qty }}</td>
+        <td>{{ order.product.price }}</td>
+        <td>{{ order.product.shop_id }}</td>
+        <td>{{ order.customer_id }}</td>
+        <td>
+          <form action="{{ url_for('web.remove_order', order_id=order.id) }}" method="POST" style="display: inline">
+            <button class="circular ui icon button" type="submit">
+              <i class="icon trash alternate"></i>
+            </button>
+          </form>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <button class="circular ui top3 button">Top 3</button>
+
+</div>
+
+<div id="top3" class="ui mini modal">
+  <div class="header">三大最受用戶喜愛的商品</div>
+  <div class="content">
+    <table class="ui center aligned celled fixed table">
+      <thead>
+        <tr>
+          <th>Product ID</th>
+          <th>Total Sales</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for top in top3 %}
+        <tr>
+          <td>{{ top[0] }}</td>
+          <td>{{ top[1] }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  <div class="actions">
+    <div class="ui negative button">OK</div>
+  </div>
+</div>
+
+<div id="reminder" class="ui mini modal">
+  <div class="header">貼心提醒</div>
+  <div class="content">
+    <ul>
+      {% if vip_mismatch %}
+      <li>訂單成立失敗，請先升級成 VIP</li>
+      {% endif %}
+      {% if understock %}
+      <li>目前 Product {{ product_id }} 貨源不足，請耐心等候</li>
+      {% endif %}
+      {% if new_arrived %}
+      <li>Product {{ product_id }} 到貨囉！</li>
+      {% endif %}
+    </ul>
+  </div>
+  <div class="actions">
+    <div class="ui negative button">OK</div>
+  </div>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<script>
+$(document).ready(() => {
+  {% if vip_mismatch or understock or new_arrived %}
+  $('#reminder').modal('show')
+  $('#reminder').modal({
+    onHide: function(){
+      window.location = 'products'
+    }
+  })
+  {% endif %}
+
+  $('#top3').modal('attach events', '.top3.button', 'show')
+
+  $('.ui.dropdown').dropdown()
+  $('#product').dropdown({
+    values: [
+      {
+        name: 'Product 1',
+        value: 1
+      },
+      {
+        name: 'Product 2',
+        value: 2
+      },
+      {
+        name: 'Product 3',
+        value: 3
+      },
+      {
+        name: 'Product 4',
+        value: 4
+      },
+      {
+        name: 'Product 5',
+        value: 5
+      },
+      {
+        name: 'Product 6',
+        value: 6
+      },
+      {
+        name: 'Product 7',
+        value: 7
+      },
+    ]
+  })
+
+})
+</script>
+{% endblock %}
+
+<!--
+  vi:et:ts=2:sw=2
+-->

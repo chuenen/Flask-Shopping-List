@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='vender/semantic.min.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}" />
+    {% block styles %}
+    {% endblock %}
+    <title>Shop</title>
+  </head>
+  <body>
+    <div class="ui middle aligned centered grid" id="content">
+      {% block content %}
+      {% endblock %}
+    </div>
+    <script src="{{ url_for('static', filename='vender/jquery.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='vender/semantic.min.js') }}"></script>
+    {% block scripts %}
+    {% endblock %}
+  </body>
+</html>

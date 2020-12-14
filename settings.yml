@@ -1,0 +1,12 @@
+---
+mysql:
+  host: db
+  username: app
+  password: secret
+  database: app_db
+
+secret_key: secret
+host: http://localhost:5000
+
+
+# vi:et:ft=yaml:ts=2:sw=2:cc=80

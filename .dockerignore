@@ -1,0 +1,6 @@
+*
+!settings.yml
+!gunicorn.py
+!Pipfile
+!Pipfile.lock
+!/project/

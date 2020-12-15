@@ -10,7 +10,7 @@ class Config:
 
     @property
     def secret_key(self):
-        return self._settings['secret_key']
+        return self._settings.get('secret_key')
 
     @property
     def host(self):

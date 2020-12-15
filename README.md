@@ -16,6 +16,10 @@ A Test
 
  4. Open browser and link to http://localhost:5000/products
 
+ 5. Run the Unit Test
+
+        $ make test
+
 
 <!--
   vi:et:wrap:ts=2:sw=2

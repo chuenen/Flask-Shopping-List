@@ -30,6 +30,13 @@ class Product(Base):
 
     _orders = relationship('Order', backref='product')
 
+    def __init__(self, stock_pcs, price ,shop_id, vip):
+        self._stock_pcs = stock_pcs
+        self._price = price
+        self._shop_id = shop_id
+        self._vip = VIP.true if vip else VIP.false
+        self._disabled = Disabled.false
+
     @property
     def id(self):
         return self._id
@@ -67,7 +74,7 @@ class Product(Base):
             'stock_pcs': self.stock_pcs,
             'price': self._price,
             'shop_id': self._shop_id,
-            'vip': self._vip == VIP.true,
+            'vip': self.vip,
         }
 
 

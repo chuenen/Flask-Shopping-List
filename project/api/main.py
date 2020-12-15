@@ -16,9 +16,9 @@ def get_order(order_id):
 @api.route('/orders', methods=['POST'])
 def add_order():
     form = request.form
-    product_id = form['product']
+    product_id = int(form['product'])
     customer_id = form['customer_id']
-    qty = form['qty']
+    qty = int(form['qty'])
 
     order_id = facade.add_order(product_id, customer_id, qty)
     return jsonify({'order_id': order_id}), 201

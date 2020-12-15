@@ -14,6 +14,7 @@ Flask-WTF = "==0.14.3"
 slackweb = "==1.0.5"
 APScheduler = "==3.6.3"
 prettytable  = "==2.0.0"
+pytest = "==6.2.0"
 
 [requires]
 python_version = "3.7"
